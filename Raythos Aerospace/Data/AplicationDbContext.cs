@@ -13,5 +13,8 @@ namespace Raythos_Aerospace.Data
         }
 
         public DbSet<Catagory> Catagorys { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+        
     }
 }
