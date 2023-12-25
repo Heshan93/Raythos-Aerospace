@@ -11,6 +11,6 @@ namespace Raythos_Aerospace.Models
         public string Name { get; set; }
         [DisplayName("DisplayOrder")]
         [Range(1,100,ErrorMessage =" out of the range(1 to  100)")]
-        public string DisplayOrder { get; set; }
+        public string DisplayOrder { get; set; } 
     }
 }
