@@ -1,5 +1,8 @@
 ﻿//using MessagePack;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Raythos_Aerospace.Models
 {
@@ -23,8 +26,15 @@ namespace Raythos_Aerospace.Models
         public string Category { get; set; }
 
         [Required]
-        public double Price { get; set; }
+        public double? Price { get; set; }
 
+        [NotMapped]
+        [Required(ErrorMessage = "Please select an sfdimage")]
+        [DisplayName("Product Image")]
+        public IFormFile ImageFile { get; set; }
+
+        //[BindNever]
+        public string ImagePath { get; set; }
 
     }
 }
