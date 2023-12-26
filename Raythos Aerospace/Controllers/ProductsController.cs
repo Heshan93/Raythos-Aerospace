@@ -62,7 +62,6 @@ namespace Raythos_Aerospace.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create( Product product)
         {
-            //product.ImagePath = "";
            
             ModelState.Remove("ImagePath");
 
@@ -90,20 +89,6 @@ namespace Raythos_Aerospace.Controllers
                 {
                     await imageFile.CopyToAsync(stream);
                 }
-
-
-
-                /*                // Save the file to a location (e.g., wwwroot/images) and store the relative path in the database
-                                 var imagePath = "/images/" + Guid.NewGuid() + Path.GetExtension(imageFile.FileName);
-                                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images", imagePath);
-
-                                using (var stream = new FileStream(filePath, FileMode.Create))
-                                {
-                                    await imageFile.CopyToAsync(stream);
-                                }
-
-                                product.ImagePath = imagePath;
-                */
 
                 product.ImagePath = $"/{folder}/{fileName}";
 
@@ -142,6 +127,8 @@ namespace Raythos_Aerospace.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Product product)
         {
+            ModelState.Remove("ImagePath");
+
             if (id != product.Id)
             {
                 return NotFound();
@@ -149,8 +136,37 @@ namespace Raythos_Aerospace.Controllers
 
             if (ModelState.IsValid)
             {
-                try
-                {
+                try 
+                { 
+                    //Image upload
+
+
+                    var imageFile = product.ImageFile;
+
+                    if (imageFile == null || imageFile.Length == 0)
+                    {
+                        ModelState.AddModelError("ImageFile", "Please select an image");
+                        return View(product);
+                    }
+
+                    string folder = "images";
+                    string fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                    string serverPath = Path.Combine(_webHostingEnvironment.WebRootPath, folder, fileName);
+
+
+                    // Create the directory if it doesn't exist
+                    Directory.CreateDirectory(Path.GetDirectoryName(serverPath));
+
+                    // Save the file to the specified location
+                    using (var stream = new FileStream(serverPath, FileMode.Create))
+                    {
+                        await imageFile.CopyToAsync(stream);
+                    }
+
+                    product.ImagePath = $"/{folder}/{fileName}";
+
+                    //Image upload
+
                     _context.Update(product);
                     await _context.SaveChangesAsync();
                 }

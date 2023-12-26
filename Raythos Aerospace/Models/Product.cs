@@ -29,11 +29,12 @@ namespace Raythos_Aerospace.Models
         public double? Price { get; set; }
 
         [NotMapped]
-        [Required(ErrorMessage = "Please select an sfdimage")]
+        [Required(ErrorMessage = "Please select an image")]
         [DisplayName("Product Image")]
         public IFormFile ImageFile { get; set; }
 
         //[BindNever]
+        [DisplayName("Product Images")]
         public string ImagePath { get; set; }
 
     }
