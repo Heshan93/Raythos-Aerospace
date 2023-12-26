@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Raythos_Aerospace.Models
 {
@@ -8,6 +9,8 @@ namespace Raythos_Aerospace.Models
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        public string DisplayOrder { get; set; }
+        [DisplayName("DisplayOrder")]
+        [Range(1,100,ErrorMessage =" out of the range(1 to  100)")]
+        public string DisplayOrder { get; set; } 
     }
 }
