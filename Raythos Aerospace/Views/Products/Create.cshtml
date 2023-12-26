@@ -51,7 +51,7 @@
 
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" type="file" class="form-control" />
+                <input asp-for="ImageFile" type="file" class="form-control" accept=".jpg, .jpeg, .png, .gif" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
 
@@ -69,4 +69,12 @@
 <div>
     <a asp-action="Index">Back to List</a>
 </div>
+
+@section Scripts
+    {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+
+    }
+}
 
