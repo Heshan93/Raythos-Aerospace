@@ -31,6 +31,7 @@ namespace Raythos_Aerospace.Models
         [NotMapped]
         [Required(ErrorMessage = "Please select an image")]
         [DisplayName("Product Image")]
+        
         public IFormFile ImageFile { get; set; }
 
         //[BindNever]
